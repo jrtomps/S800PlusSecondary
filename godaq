@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/devopt/nscldaq/11.0/bin/ReadoutShell 
+#/usr/opt/nscldaq/10.2-106/bin/ReadoutShell 

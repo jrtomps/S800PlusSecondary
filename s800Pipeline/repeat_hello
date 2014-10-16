@@ -1,0 +1,10 @@
+#!/usr/bin/env tclsh
+
+set i 0
+while {$i < 4} {
+  puts "Hello world"
+  flush stdout
+
+  after 1000
+  incr i
+}

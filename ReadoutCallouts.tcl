@@ -4,7 +4,6 @@
 # secondary DAQ to be event built. The user certainly needs to make sure that
 # the parameters. Certainly the user must replay the following strings:
 #
-#   DATA 
 #   SECONDARY_SPDAQ 
 #   RING_ON_SECSPDAQ
 #
@@ -23,6 +22,8 @@ lappend auto_path [file join $daqroot TclLibs]
 # load event builder package
 package require evbcallouts
 
+# load s800 data pipeline
+package require S800DataPipeline
 
 ################################################################################
 ################################################################################
@@ -33,15 +34,24 @@ package require evbcallouts
 
 #   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -  #
 #
-#                         S800 PARAMETERS 
+#                         S800 Run Control PARAMETERS 
 #
-set s800id   5        ;# source id for the s800
-set s800host spdaq48  ;# host where S800Daq runs
-set s800port 8000     ;# port S800DAQ receives run control commands on
-set s800ring "s800_DATA" ;# ring where s800 data will reside prior to 
-                             ;#injection into the event builder
+set s800id   5         ;# source id for the s800
+set s800host spdaq48   ;# host where S800Daq runs
+set s800port 8000      ;# port S800DAQ receives run control commands on
+set s800ring s800_data ;# ring where s800 data will reside prior to 
+                         ;#injection into the event builder
 # tstamp extractor lib location for s800
 set s800tstamplib [file join $rdocalloutdir libs800timestamp.so] 
+
+
+#   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -  #
+#
+#                         S800 DATA PIPELINE PARAMETERS 
+#
+S800DataPipeline::s800host     $s800host
+S800DataPipeline::s800DataPort 9002 
+S800DataPipeline::s800ring     $s800ring
 
 #   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -  #
 
@@ -80,10 +90,12 @@ proc OnStart {} {
 
 ## @brief User-code hook called when "Begin" button is pressed
 #
+# Start up the S800 data pipeline
 # Inform event builder that a new run is starting.
 #
 # @param run  run number of current run
 proc OnBegin run {
+  S800DataPipeline::initialize ;
   EVBC::onBegin  ;# this ultimately calls startEVBSources
 }
 

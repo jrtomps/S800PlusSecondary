@@ -1,5 +1,0 @@
-#!/bin/bash
-
-DAQROOT=/usr/devopt/nscldaq/11.0
-
-$DAQROOT/bin/s800toring spdaq48 9002 s800_eCaesar

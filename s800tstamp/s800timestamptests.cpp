@@ -271,7 +271,7 @@ void S800TimestampTest::testTstampFullBuffer()
   pPhysicsEventItem item = reinterpret_cast<pPhysicsEventItem>(sample_data);
   uint64_t time = timestamp(item);
 
-  CPPUNIT_ASSERT_EQUAL(static_cast<uint64_t>(0x00aa0099000cf1a9)*10,
+  CPPUNIT_ASSERT_EQUAL(static_cast<uint64_t>(0x00aa0099000cf1a9),
                        time);
 
 }

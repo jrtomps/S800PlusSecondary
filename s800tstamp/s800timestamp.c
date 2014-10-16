@@ -8,11 +8,15 @@
      http://www.gnu.org/licenses/gpl.txt
 
      Author:
-       Jeromy Tompkins
+       NSCLDAQ Development Group
 	     NSCL
 	     Michigan State University
 	     East Lansing, MI 48824-1321
 */
+/**! @note Original version written by Ron Fox. It has been modified by Jeromy
+ *         Tompkins 
+ *
+ * */
 
 
 /**
@@ -45,7 +49,9 @@
 #include <stdio.h>
 
 /**
- * Returns the timestamp from the s800 event passed in. Several sanity checks are performed:
+ * Returns the timestamp from the s800 event passed in. This differs from the
+ * canned NSCLDAQ S800 timestamp extractor because it provides a scaler factor.
+ * Several sanity checks are performed:
  * - the event must have the correct type.
  * - the event format level must be at least S800_MINVERSION
  * - there must be a packet of type S800_TIMESTAMP_PACKET 

@@ -1,3 +1,17 @@
+#
+#    This software is Copyright by the Board of Trustees of Michigan
+#    State University (c) Copyright 2014.
+#
+#    You may use this software under the terms of the GNU public license
+#    (GPL).  The terms of this license are described at:
+#
+#     http://www.gnu.org/licenses/gpl.txt
+#
+#     Author:
+#       Jeromy Tompkins
+#	     NSCL
+#	     Michigan State University
+#	     East Lansing, MI 48824-1321
 
 CXX = g++
 
@@ -5,23 +19,22 @@ CXX = g++
 
 
 
-INSTALLDIR = /home/tompkins/eCAESAR
-DAQINSTALL = /usr/devopt/nscldaq/11.0
+INSTALLDIR = ../.
 
-LDFLAGS += -L$(DAQINSTALL)/lib -fPIC
-CXXFLAGS += -I$(DAQINSTALL)/include -g
+LDFLAGS += -L$(DAQROOT)/lib -fPIC
+CXXFLAGS += -I$(DAQROOT)/include -g
 
 OBJS = s800timestamp.o
-
-$(OBJS) : %.o : %.c
-	$(CC) $(CXXFLAGS) -fPIC -c -o $@ $^
 
 all : $(INSTALLDIR)/libs800timestamp.so unittests
 
 $(INSTALLDIR)/libs800timestamp.so : $(OBJS) 
 	$(CXX) -shared -o $@ $(CXXFLAGS) $< $(LDFLAGS) \
 					-Wl,-soname=libs800timestamp.so \
-					-Wl,"-rpath=$(DAQINSTALL)/lib" -Wl,-rpath=$(INSTALLDIR)
+					-Wl,"-rpath=$(DAQROOT)/lib" -Wl,-rpath=$(INSTALLDIR)
+
+$(OBJS) : %.o : %.c
+	$(CC) $(CXXFLAGS) -fPIC -c -o $@ $^
 
 clean :
 	rm -f $(OBJS)

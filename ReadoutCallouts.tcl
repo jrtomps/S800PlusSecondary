@@ -114,12 +114,11 @@ proc startEVBSources {} {
     global sechost secring sectstamplib secid
     global s800host s800ring s800tstamplib s800id
 
-    # start the ring source for the csrdaq ring
-    EVBC::startRingSource tcp://$csrhost/$csrring $csrtstamplib \
-                          $csrid "CAESAR"
+    # start the ring source for the secdaq ring
+    EVBC::startRingSource tcp://$sechost/$secring $sectstamplib \
+                          $secid "Secondary"
 	
     # start ring source for the s800 ring, (this is part of nscldaq)
-#    EVBC::startS800Source tcp://localhost/$s800ring $s800id
     EVBC::startRingSource tcp://localhost/$s800ring $s800tstamplib \
 			$s800id "S800"
 

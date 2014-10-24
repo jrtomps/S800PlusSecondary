@@ -18,6 +18,7 @@ set rdocalloutdir [file dirname [file normalize [info script]]]
 
 set daqroot $env(DAQROOT) 
 lappend auto_path [file join $daqroot TclLibs]
+lappend auto_path $rdocalloutdir 
 
 # load event builder package
 package require evbcallouts
@@ -49,9 +50,9 @@ set s800tstamplib [file join $rdocalloutdir libs800timestamp.so]
 #
 #                         S800 DATA PIPELINE PARAMETERS 
 #
-S800DataPipeline::s800host     $s800host
-S800DataPipeline::s800DataPort 9002 
-S800DataPipeline::s800ring     $s800ring
+set S800DataPipeline::s800host     $s800host
+set S800DataPipeline::s800DataPort 9002 
+set S800DataPipeline::s800ring     $s800ring
 
 #   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -  #
 

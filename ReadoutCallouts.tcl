@@ -78,6 +78,7 @@ set sectstamplib [file join $rdocalloutdir libsectimestamp.so]
 
 ## @brief User-code hook called when "Start" button is pressed
 #
+# Starts up the S800 data pipeline
 # Initializes the Event builder with following option
 #  - enables GUI control
 #  - EVB persists between runs rather than restarting for each run
@@ -85,17 +86,16 @@ set sectstamplib [file join $rdocalloutdir libsectimestamp.so]
 #  - event builder correlates events (-glombuild)
 #
 proc OnStart {} {
-    EVBC::initialize -gui true -restart off -glomdt 100 -glombuild true
+  S800DataPipeline::initialize ;
+  EVBC::initialize -gui true -restart off -glomdt 100 -glombuild true
 }
 
 ## @brief User-code hook called when "Begin" button is pressed
 #
-# Start up the S800 data pipeline
 # Inform event builder that a new run is starting.
 #
 # @param run  run number of current run
 proc OnBegin run {
-  S800DataPipeline::initialize ;
   EVBC::onBegin  ;# this ultimately calls startEVBSources
 }
 

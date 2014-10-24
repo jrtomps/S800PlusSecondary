@@ -110,11 +110,18 @@ proc ::S800DataPipeline::_readInput {channel} {
   if { [eof $pipe] } {
      # we don't want to read anymore... so unregister the event callback
      chan event $pipe readable ""
+
      # close the channel
      catch {close $pipe} message
-     set ::S800DataPipeline::pipe -1
 
-     ReadoutGUIPanel::Log S800DataPipeline warning "S800 Data pipeline exited"
+     # if this is the pipe we last opened, then reset the pipeline channel 
+     # It is most likely that the eof will be from a different channel that was last opened. 
+     if {$pipe eq $::S800DataPipelie::pipe} {
+       set ::S800DataPipeline::pipe -1
+     }
+
+     ReadoutGUIPanel::Log S800DataPipeline warning "S800 Data pipeline exited unexpectedly!"
+     tk_messageBox -icon error -message "S800 Data pipeline exited unexpectedly!"
   } else {
     # Read as much input as possible
     set input [read $pipe ]
